@@ -1,23 +1,32 @@
 import { useState } from 'react'
 import ax from 'axios'
 const WorkoutForm = ({ show, setShow }) => {
+
     const [title, setTitle] = useState('')
     const [load, setLoad] = useState('')
     const [reps, setReps] = useState('')
     const [error, setError] = useState(null)
+
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const workout = { title, load, reps }
-        try {
-            await ax.post(import.meta.env.VITE_URI + "/api/workouts", workout);// the server will recieve that
+
+        try { 
+            const workout = { title, load, reps }
+            const users = JSON.parse(localStorage.getItem('user'))
+            
+            const response = await ax.post(import.meta.env.VITE_URI + "/api/workouts", workout,{
+                headers:{
+                    'Authorization':`Bearer ${users.token}`
+                }
+            });// the server will recieve that
             setError(null)
             setTitle('')
             setLoad('')
             setReps('')
-            setShow(!show)
-            console.log('new workout added:')
+            show ? setShow(false) : setShow(true)
         } catch (error) {
             setError('please make sure you add all fields')
+            console.log(error)
         }
     }
     return (
