@@ -3,11 +3,16 @@ import ax from 'axios'
 import { MdDelete } from "react-icons/md";
 
 const WorkoutDetails = ({ workout, show, setShow }) => {
+
+    const users = JSON.parse(localStorage.getItem('user'))
     const handleClick = async () => {
-        const response = await ax.delete(import.meta.env.VITE_URI + '/api/workouts/' + workout._id)
-        if (response) {
+
+        await ax.delete(import.meta.env.VITE_URI + '/api/workouts/' + workout._id, {headers:{
+            'Authorization': `Bearer ${users.token}`
+        }})
+
             setShow(!show)// when show changed ,use effect will be enabled
-        }
+
     }
     return (
         <div className="workout-details">
