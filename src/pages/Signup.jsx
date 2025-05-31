@@ -9,7 +9,7 @@ const Signup = () => {
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(null)
 
-    const handleSubmit = async (e) => {
+    const handelSubmit = async (e) => {
         e.preventDefault()
 
         try {
@@ -24,27 +24,27 @@ const Signup = () => {
             setIsLoading(false)
             setError(error.response.data.error)
         }
-        return (
-        <form className='signup' onSubmit={handleSubmit}>
+    }
+    return (
+        <form className='signup' onSubmit={handelSubmit}>
             <h3>Sign up</h3>
             <label>Email address:</label>
             <input
-            type='text'
-            onChange={(e)=>setEmail(e.target.value)}
-            value={email}
+                type='text'
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
             />
 
             <label>Password:</label>
             <input
-            type='password'
-            onChange={(e)=>setEmail(e.target.value)}
-            value={password}
+                type='password'
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
             />
 
             <button disabled={isLoading}>Log in</button>
             {error && <div className="error">{error}</div>}
         </form>
-        )
-    }
+    )
 }
 export default Signup
